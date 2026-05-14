@@ -16,10 +16,15 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan route:clear
+RUN php artisan view:clear
+
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
 
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+CMD php -S 0.0.0.0:10000 -t public
